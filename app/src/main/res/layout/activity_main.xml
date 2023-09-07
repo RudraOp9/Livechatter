@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:hapticFeedbackEnabled="true"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="110dp"
+                android:layout_marginLeft="170dp">
+
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:contentDescription="@string/account"
+                    android:scaleType="fitXY"
+                    android:layout_marginLeft="40dp"
+                    app:srcCompat="@drawable/images__3_" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="31dp"
+                    android:layout_below="@id/imageView"
+                    android:layout_marginStart="27dp"
+                    android:layout_marginLeft="27dp"
+                    android:layout_marginTop="-11dp"
+                    android:clickable="false"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:text="Welcome"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="#6063EE" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="31dp"
+                    android:layout_below="@id/imageView"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="-12dp"
+                    android:layout_toEndOf="@+id/textView5"
+                    android:layout_toRightOf="@+id/textView5"
+                    android:clickable="false"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:text="arundhati"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="#6063EE" />
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginEnd="71dp"
+                    android:layout_marginRight="71dp"
+                    android:background="#00FFFFFF"
+                    android:text="Edit"
+                    android:textColor="@color/black" />
+
+            </RelativeLayout>
+
+            <FrameLayout
+                android:id="@+id/frame"
+                android:layout_width="404dp"
+                android:layout_height="131dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="1dp">
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    android:layout_marginLeft="280dp"
+                    android:layout_marginTop="0dp"
+                    android:background="#00FFFFFF"
+                    android:baselineAlignBottom="true"
+                    android:contentDescription="@string/mic"
+                    android:onClick="voiceOpen"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/_314955"
+                    tools:layout_editor_absoluteX="296dp"
+                    tools:layout_editor_absoluteY="196dp" />
+
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    android:layout_marginLeft="170dp"
+                    android:layout_marginTop="0dp"
+                    android:background="#00FFFFFF"
+                    android:baselineAlignBottom="true"
+                    android:contentDescription="@string/message"
+                    android:onClick="msgOpen"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/download"
+                    tools:layout_editor_absoluteX="182dp"
+                    tools:layout_editor_absoluteY="196dp" />
+
+                <ImageButton
+                    android:id="@+id/imageButton3"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="0dp"
+                    android:background="#00FFFFFF"
+                    android:baselineAlignBottom="true"
+                    android:contentDescription="@string/video"
+                    android:onClick="videoOpen"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/images"
+                    tools:ignore="ImageContrastCheck"
+                    tools:layout_editor_absoluteX="62dp"
+                    tools:layout_editor_absoluteY="196dp" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="67dp"
+                    android:layout_height="33dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="80dp"
+                    android:contentDescription="@string/video"
+                    android:onClick="videoOpen"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/vidroom"
+                    tools:ignore="TouchTargetSizeCheck,UsingOnClickInXml"
+                    tools:layout_editor_absoluteX="61dp"
+                    tools:layout_editor_absoluteY="298dp" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="67dp"
+                    android:layout_height="33dp"
+                    android:layout_marginLeft="170dp"
+                    android:layout_marginTop="80dp"
+                    android:contentDescription="@string/message"
+                    android:onClick="msgOpen"
+                    app:srcCompat="@drawable/msgroom"
+                    tools:ignore="TouchTargetSizeCheck,UsingOnClickInXml"
+                    tools:layout_editor_absoluteX="182dp"
+                    tools:layout_editor_absoluteY="298dp" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="67dp"
+                    android:layout_height="33dp"
+                    android:layout_marginLeft="280dp"
+                    android:layout_marginTop="80dp"
+                    android:contentDescription="@string/mic"
+                    android:onClick="voiceOpen"
+                    app:srcCompat="@drawable/vcroom"
+                    tools:ignore="TouchTargetSizeCheck"
+                    tools:layout_editor_absoluteX="296dp"
+                    tools:layout_editor_absoluteY="298dp" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="227dp"
+                android:layout_height="226dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="52dp">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="110dp"
+                    android:layout_marginTop="55dp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:onClick="instaRedirect"
+                    android:text="INSTAGRAM"
+
+                    android:textSize="20sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="110dp"
+                    android:layout_marginTop="165dp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:onClick="gitRedirect"
+                    android:text="GIT HUB"
+                    android:textSize="20sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="110dp"
+                    android:layout_marginTop="4dp"
+
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:onClick="donateMe"
+                    android:text="DONATE"
+                    android:textSize="20sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="110dp"
+                    android:layout_marginTop="110dp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:onClick="faceRedirect"
+                    android:text="FACEBOOK"
+                    android:textSize="20sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <ImageView
+                    android:id="@+id/imageButton8"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="0dp"
+                    android:background="#6DFFFFFF"
+                    android:contentDescription="@string/donate"
+                    android:onClick="donateMe"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/pngtreecharity_4961692"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <ImageButton
+                    android:id="@+id/imageButton5"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="110dp"
+                    android:background="#00FFFFFF"
+                    android:contentDescription="@string/facebook"
+                    android:onClick="faceRedirect"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/qulu_xi5zd1"
+                    tools:ignore="UsingOnClickInXml,TouchTargetSizeCheck" />
+
+                <ImageButton
+                    android:id="@+id/imageButton6"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="55dp"
+                    android:background="#00FFFFFF"
+                    android:contentDescription="@string/instagram"
+                    android:onClick="instaRedirect"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/qabli0oziks"
+                    tools:ignore="UsingOnClickInXml,TouchTargetSizeCheck" />
+
+                <ImageButton
+                    android:id="@+id/imageButton7"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="160dp"
+                    android:background="#00FFFFFF"
+                    android:contentDescription="@string/git"
+                    android:onClick="gitRedirect"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/png_transparent_git_vector_brand_logos_icon"
+                    tools:ignore="UsingOnClickInXml,TouchTargetSizeCheck" />
+            </FrameLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/abc"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Live Chatter"
+        app:titleTextColor="#FFFFFF" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

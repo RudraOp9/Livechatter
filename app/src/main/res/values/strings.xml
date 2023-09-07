@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Live chatter</string>
+    <string name="mic">mic</string>
+    <string name="message">message</string>
+    <string name="video">video</string>
+    <string name="theme">night</string>
+    <string name="facebook">facebook</string>
+    <string name="instagram">instagram</string>
+    <string name="git">git</string>
+    <string name="donate">donate</string>
+    <string name="account">acc</string>
+    <string name="vidRoom">Video Room</string>
+    <string name="welcome">Welcome XYZ</string>
+</resources>
