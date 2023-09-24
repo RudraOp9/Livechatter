@@ -9,6 +9,8 @@
     <string name="git">git</string>
     <string name="donate">donate</string>
     <string name="account">acc</string>
-    <string name="vidRoom">Video Room</string>
-    <string name="welcome">Welcome XYZ</string>
+    <string name="welcome">Welcome</string>
+    <string name="videoR">Video\nRoom</string>
+    <string name="chatR">Chat\nRoom</string>
+    <string name="vcR">VC\nRoom</string>
 </resources>
