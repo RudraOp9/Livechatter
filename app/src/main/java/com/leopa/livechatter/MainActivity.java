@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,21 +18,30 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    redirect[] myListData;
 
-    redirectAdapter adapter;
+
+
+
 
 
     @Override
     protected void onResume() {
         // put your code here...
         super.onResume();
+        ImageView profileImage = findViewById(R.id.imageView);
         resouces resouces = new resouces();
-        String ututu = resouces.getUserName();
-        TextView userNameView = findViewById(R.id.name1);
-        userNameView.setText(ututu);
+        String newUserName = resouces.getUserNameOfficial();
+        TextView userNameView1 = findViewById(R.id.name1);
+        userNameView1.setText(newUserName);
+        try {
+            profileImage.setImageBitmap(resouces.getImageSrc());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         Toast.makeText(this, "you called on resume", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, newUserName + " welcome", Toast.LENGTH_SHORT).show();
 
 
 
@@ -46,18 +57,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView = findViewById(R.id.recyclerView);
-        myListData = new redirect[]{
-                new redirect(R.drawable.donate , "Donate"),
-                new redirect(R.drawable.facebook, "FaceBook"),
-                new redirect(R.drawable.instagram, "InstaGram"),
-                new redirect(R.drawable.git, "GitHub")
-        };
 
-        adapter = new redirectAdapter(myListData);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+
+
+
+
+
+
 
 
         // sending user name and switching to edit profile activity
@@ -73,21 +79,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // getting new username from profile activity and seting to the textview
-
-        resouces resouces = new resouces();
-        String ututu = resouces.getUserName();
-        Intent intent1 = getIntent();
-        //String username = intent1.getStringExtra("name");
-        TextView userNameView = findViewById(R.id.name1);
-
-            userNameView.setText(ututu);
 
 
 
 
-       // ImageView imgg = findViewById(R.id.imageView5);
-        //imgg.setImageDrawable(Drawable.createFromPath(String.valueOf(R.drawable._314955)));
+
+
+
 
 
 
