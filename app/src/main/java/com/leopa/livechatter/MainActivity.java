@@ -82,14 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
     }
 // CUSTOM METHODS
 
