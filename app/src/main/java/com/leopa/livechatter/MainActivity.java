@@ -5,11 +5,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,24 +28,37 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onResume() {
         // put your code here...
         super.onResume();
-        ImageView profileImage = findViewById(R.id.imageView);
-        resouces resouces = new resouces();
-        String newUserName = resouces.getUserNameOfficial();
-        TextView userNameView1 = findViewById(R.id.name1);
-        userNameView1.setText(newUserName);
-        try {
-            profileImage.setImageBitmap(resouces.getImageSrc());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        TextView textView =  findViewById(R.id.name1);
+        ImageView imageView = findViewById(R.id.profileImg);
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserData",MODE_PRIVATE);
+        String k = sharedPreferences.getString("userName"," ");
+        String kimg = sharedPreferences.getString("userImg","");
+        byte[] b = Base64.decode(kimg, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+        imageView.setImageBitmap(bitmap);
+        textView.setText(k);
+        //ImageView profileImage = findViewById(R.id.imageView);
+       // resouces resouces = new resouces();
+       // String newUserName = resouces.getUserNameOfficial();
+        //TextView userNameView1 = findViewById(R.id.name1);
+       // userNameView1.setText(newUserName);
+      //  try {
+       //     profileImage.setImageBitmap(resouces.getImageSrc());
+      //  } catch (Exception e) {
+      //      e.printStackTrace();
+      //  }
 
 
         Toast.makeText(this, "you called on resume", Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, newUserName + " welcome", Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, newUserName + " welcome", Toast.LENGTH_SHORT).show();
 
 
 
@@ -66,6 +83,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
+
         // sending user name and switching to edit profile activity
         Button btn = findViewById(R.id.buttonProfile);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
                 //switchActivity.putExtra("userName",name);
             }
         });
+
+
+
 
 
 

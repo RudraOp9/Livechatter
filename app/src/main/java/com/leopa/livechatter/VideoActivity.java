@@ -42,6 +42,7 @@ public class VideoActivity extends AppCompatActivity {
 
 
 
+
             cameraProviderFuture = ProcessCameraProvider.getInstance(this);
 
         cameraProviderFuture.addListener(() -> {
