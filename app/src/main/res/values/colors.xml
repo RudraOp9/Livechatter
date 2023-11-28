@@ -2,4 +2,19 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="such_fun">#489EA8</color>
+
+    <color name="foggy_grey">#A7A69D</color>
+    <color name="pearl_lusta">#F1EAD7</color>
+
+    <color name="lavender">#DE8AF0</color>
+
+    <color name="nice">#FFA0CCED</color>
+    <color name="niceblue">#4FBCD6</color>
+
+
+
+
+
 </resources>

@@ -24,7 +24,6 @@ import java.io.ByteArrayOutputStream;
 
 public class profile extends AppCompatActivity {
 
-    private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView img;
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ImageButton btn;
@@ -79,26 +78,21 @@ public class profile extends AppCompatActivity {
         setSupportActionBar(ab);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        //done button
+        //getting image and text from sp and setting it to their views.
         SharedPreferences sharedPreferences = getSharedPreferences("UserData",MODE_PRIVATE);
 
         String kimg = sharedPreferences.getString("userImg","");
         byte[] b = Base64.decode(kimg, Base64.DEFAULT);
         bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
-        img.setImageBitmap(bitmap);
-
-
-
-
-
-      //  editName.setText( resouces.getUserNameOfficial());
-
+        img.setImageBitmap(bitmap);    //image
         String k = sharedPreferences.getString("userName"," ");
-        editName.setText(k);
+        editName.setText(k);     //text
 
+
+
+        // done button
         Button doneButton = findViewById(R.id.buttonDone);
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +116,7 @@ public class profile extends AppCompatActivity {
 
     //Custom Methods Here
 
-    private void openGallery() {
+    private void openGallery() { // this method opens gallery
         // Create an Intent to pick an image from the gallery
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         galleryLauncher.launch(galleryIntent);
@@ -141,7 +135,7 @@ public class profile extends AppCompatActivity {
     }
 
 
-    private void uploadUserDataToSP(String nameValue, String imgValue) {
+    private void uploadUserDataToSP(String nameValue, String imgValue) { // this method uploads data to sp
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserData",MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();

@@ -1,6 +1,8 @@
 package com.leopa.livechatter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+    DrawerLayout drawerLayout;
 
 
 
@@ -45,20 +50,8 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
         imageView.setImageBitmap(bitmap);
         textView.setText(k);
-        //ImageView profileImage = findViewById(R.id.imageView);
-       // resouces resouces = new resouces();
-       // String newUserName = resouces.getUserNameOfficial();
-        //TextView userNameView1 = findViewById(R.id.name1);
-       // userNameView1.setText(newUserName);
-      //  try {
-       //     profileImage.setImageBitmap(resouces.getImageSrc());
-      //  } catch (Exception e) {
-      //      e.printStackTrace();
-      //  }
-
 
         Toast.makeText(this, "you called on resume", Toast.LENGTH_SHORT).show();
-      //  Toast.makeText(this, newUserName + " welcome", Toast.LENGTH_SHORT).show();
 
 
 
@@ -67,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Toast.makeText(this, "you called on pausae", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "you called on pause", Toast.LENGTH_SHORT).show();
+       // closeDrawer(drawerLayout);
     }
 
     @Override
@@ -75,18 +69,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ImageView menu;
+        DrawerLayout drawerLayout;
+
+        drawerLayout = findViewById(R.id.drawerLayout);
+        menu = findViewById(R.id.menu);
 
 
 
 
 
 
+        //munu drawer button
 
-
-
-
-
-
+       /* menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDrawer(drawerLayout);
+            }
+        });*/
 
 
         // sending user name and switching to edit profile activity
@@ -100,16 +101,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(switchActivity);
                 //switchActivity.putExtra("userName",name);
             }
-        });
-
-
-
+        });   //button ends here
 
 
 
 
     }
 // CUSTOM METHODS
+
+    public static void openDrawer(DrawerLayout drawerLayout){
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+    public static void closeDrawer(DrawerLayout drawerLayout){
+      if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+          drawerLayout.closeDrawer(GravityCompat.START);
+      }
+    }
 
        /* public void faceRedirect(View view) {
             Intent openBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/narendramodi/"));
@@ -138,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
           public void voiceOpen (View view){
         Intent switchActivity = new Intent(this , ActivtyVoice.class);
         startActivity(switchActivity);
+    }
+
+    public void pagal (View view){
+        openDrawer(drawerLayout);
     }
 
 
