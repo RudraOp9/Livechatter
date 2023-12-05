@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8F3FF"
+    tools:context=".profile">
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="Build Your Profile  !"
+        android:textColor="@color/such_fun"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/imgProfileLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgProfileLogin"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="144dp"
+        android:layout_marginBottom="4dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/baseline_man_24"
+        app:layout_constraintBottom_toTopOf="@+id/profileNameLogin"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </ImageView>
+
+    <EditText
+        android:id="@+id/profileNameLogin"
+        android:layout_width="185dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginBottom="68dp"
+        android:background="@android:drawable/editbox_background_normal"
+        android:hint="Your name"
+        android:text=""
+        android:maxLength="12"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonDoneLogin"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/pickBtnLogin"
+        android:layout_width="58dp"
+        android:layout_height="56dp"
+        android:backgroundTint="#00FFFFFF"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        android:src="@drawable/baseline_add_a_photo_24"
+        app:layout_constraintBottom_toBottomOf="@+id/imgProfileLogin"
+        app:layout_constraintStart_toEndOf="@+id/imgProfileLogin"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/buttonDoneLogin"
+        android:layout_width="264dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="316dp"
+        android:text="Let's Go !!!"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

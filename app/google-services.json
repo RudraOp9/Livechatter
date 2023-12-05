@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "818782459062",
+    "project_id": "live-chatter-b96a3",
+    "storage_bucket": "live-chatter-b96a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818782459062:android:1001367811a20aa6388217",
+        "android_client_info": {
+          "package_name": "com.leopa.livechatter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqvrpFdGQ5qZLo1L4Xd3rRRJ9FTAf3UvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

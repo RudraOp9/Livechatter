@@ -12,6 +12,7 @@ import androidx.lifecycle.LifecycleOwner;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -32,14 +33,6 @@ public class VideoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_video);
 
         previewView = findViewById(R.id.cameraPreview);
-
-        Toolbar ab = (Toolbar) findViewById(R.id.abc);
-        setSupportActionBar(ab);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-
 
 
 
@@ -80,18 +73,11 @@ public class VideoActivity extends AppCompatActivity {
 
 
 
-    @Override
-    public boolean onOptionsItemSelected (MenuItem item){
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
 
 
+    public void back (View view){finish();}
 
 
 

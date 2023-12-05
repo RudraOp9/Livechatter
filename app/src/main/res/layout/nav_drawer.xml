@@ -1,25 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top"
+
     android:background="@drawable/nav_back_drawer">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/niceblue"
-        android:orientation="vertical">
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+
+        android:background="@drawable/nav_bar"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/profileImg"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="25dp"
+            android:contentDescription="@string/account"
+            android:scaleType="fitCenter"
+            android:src="@drawable/baseline_man_24"
+           />
 
 
         <TextView
             android:id="@+id/name1"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="25dp"
             android:fontFamily="sans-serif-condensed-medium"
-            android:text="user"
+            android:text=" welcome user !"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -34,12 +51,13 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/buttonProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit Profile"
-            android:textSize="17sp"
             android:drawableLeft="@drawable/baseline_edit_24"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:text="Edit Profile"
+            android:textSize="17sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -52,6 +70,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="settings"
             android:text="Settings"
             android:textSize="17sp"
             android:padding="5dp"
@@ -106,6 +125,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/AboutUs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="17sp"
@@ -119,9 +139,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="40dp"
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/logOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="17sp"

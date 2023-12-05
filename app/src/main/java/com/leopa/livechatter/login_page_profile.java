@@ -3,16 +3,14 @@ package com.leopa.livechatter;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,38 +18,53 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.ByteArrayOutputStream;
 
-public class profile extends AppCompatActivity {
+public class login_page_profile extends AppCompatActivity {
 
-    private ImageView img;
+    Button doneButtonLogin;
+    ImageButton pickImgLogin;
+    EditText profileNameLogin;
+    ImageView profileImgLogin;
     private ActivityResultLauncher<Intent> galleryLauncher;
-    private ImageButton btn;
     Bitmap bitmap;
     String encodedImage;
-
-
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_login_page_profile);
+
+        doneButtonLogin = findViewById(R.id.buttonDoneLogin);
+        pickImgLogin = findViewById(R.id.pickBtnLogin);
+        profileImgLogin = findViewById(R.id.imgProfileLogin);
+        profileNameLogin = findViewById(R.id.profileNameLogin);
 
 
-        EditText editName = findViewById(R.id.profileName);
+        final int[] valueKey = {2};
+        SharedPreferences sp1 = getSharedPreferences("UserData",MODE_PRIVATE);
+        int value = sp1.getInt("isLoggedIn",9);
+        if(value==0){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+
+            // 0 is logged in 1 is not loggedddd
+        }else{
+
+        }
 
 
-
-        //Picking the image from gallery
-        btn = findViewById(R.id.pickBtn);
-        img = findViewById(R.id.imgProfile);
-        btn.setOnClickListener(new View.OnClickListener() {
+        pickImgLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openGallery();
             }
         });
+
 
         // Initialize ActivityResultLauncher
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -62,7 +75,7 @@ public class profile extends AppCompatActivity {
                 try {
                     // Convert the URI to a Bitmap and set it to the ImageView
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                    img.setImageBitmap(bitmap);
+                    profileImgLogin.setImageBitmap(bitmap);
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                     byte[] b = baos.toByteArray();
@@ -73,54 +86,47 @@ public class profile extends AppCompatActivity {
             }
         });
 
-        //Toolbar
-
-        //getting image and text from sp and setting it to their views.
-        SharedPreferences sharedPreferences = getSharedPreferences("UserData",MODE_PRIVATE);
-
-        String kimg = sharedPreferences.getString("userImg","");
-        byte[] b = Base64.decode(kimg, Base64.DEFAULT);
-        bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
-        img.setImageBitmap(bitmap);    //image
-        String k = sharedPreferences.getString("userName"," ");
-        editName.setText(k);     //text
-
-
-
-        // done button
-        Button doneButton = findViewById(R.id.buttonDone);
-        doneButton.setOnClickListener(new View.OnClickListener() {
+        doneButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = editName.getText().toString();
+                 String name;
+                 name = profileNameLogin.getText().toString().trim();
 
-                uploadUserDataToSP(name,encodedImage);  //uploading the user data to sharedprefrances using this function.
+                 uploadUserDataToSP(name,encodedImage);  //uploading the user data to sharedprefrances using this function.
 
-                Toast.makeText(profile.this, name, Toast.LENGTH_SHORT).show();
-              // resouces.setUserNameOfficial(name);
+                if (name.isEmpty()){
+                    Toast.makeText(login_page_profile.this, "fields are empty", Toast.LENGTH_SHORT).show();
+                }else {
 
-              // resouces.setImageSrc(bitmap);
-              finish();
+                    Toast.makeText(login_page_profile.this, name, Toast.LENGTH_SHORT).show();
+
+                    // setting so that user do not come back here onards
+                    valueKey[0] = 0;
+                    SharedPreferences sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
+                    SharedPreferences.Editor edit1 = sharedPreferences.edit();
+                    edit1.putInt("isLoggedIn", valueKey[0]);
+                    edit1.apply();
+
+                    //come here soon and give some intent
+                    Intent intent = new Intent(login_page_profile.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
 
             }
         });
 
-        }
 
 
-
-    //Custom Methods Here
+    }
+    //Methods here
 
     private void openGallery() { // this method opens gallery
         // Create an Intent to pick an image from the gallery
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         galleryLauncher.launch(galleryIntent);
     }
-
-     // displaying new image from user input to image view
-
-        //ToolBar Exit Method
-
 
 
     private void uploadUserDataToSP(String nameValue, String imgValue) { // this method uploads data to sp
@@ -132,7 +138,4 @@ public class profile extends AppCompatActivity {
         edit.putString("userImg", imgValue);
         edit.commit();
     }
-
-    public void back (View view){finish();}
-
 }

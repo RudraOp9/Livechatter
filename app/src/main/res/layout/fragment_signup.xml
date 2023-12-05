@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".fragment_signup">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Sign Up"
+        android:textSize="40sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
+        android:text="Please fill the details below to continue"
+        android:textSize="15sp"
+        />
+
+    <EditText
+        android:id="@+id/emailTextCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Your E-Mail Address"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_gravity="center"
+        android:inputType="textEmailAddress"
+        />
+    <EditText
+        android:id="@+id/userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter UserName"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_gravity="center"
+        android:inputType="text"
+        />
+
+    <EditText
+        android:id="@+id/passTextCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_gravity="center"
+        android:inputType="textPassword"
+        />
+
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:text="Sign Up"
+        android:textSize="20sp"
+        />
+
+
+
+</LinearLayout>
