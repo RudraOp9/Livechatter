@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:background="@color/grey"
+   >
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:id="@+id/progressBar"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finding An User..."
+        android:layout_margin="10dp"
+        app:fontFamily="sans-serif-smallcaps"
+        android:textStyle="bold"
+        android:padding="5dp"
+
+        />
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

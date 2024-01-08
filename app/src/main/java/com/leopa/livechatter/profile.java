@@ -128,9 +128,10 @@ public class profile extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserData",MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();
 
+        edit.putBoolean("logIn",true);
         edit.putString("userName", nameValue);
         edit.putString("userImg", imgValue);
-        edit.commit();
+        edit.apply();
     }
 
     public void back (View view){finish();}

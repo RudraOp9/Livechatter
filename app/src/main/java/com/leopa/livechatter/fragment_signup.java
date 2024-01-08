@@ -33,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 
 /**
@@ -42,10 +43,10 @@ import java.util.concurrent.Executor;
  */
 public class fragment_signup extends Fragment {
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user;
     View parentHolder;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -102,42 +103,35 @@ public class fragment_signup extends Fragment {
         EditText userName =(EditText) parentHolder.findViewById(R.id.userName);
         Button signUp = (Button) parentHolder.findViewById(R.id.btnSignUp);
 
-        mAuth = FirebaseAuth.getInstance();
 
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (emailText.getText().toString().trim().isEmpty() || passwordText.getText().toString().trim().isEmpty() || userName.getText().toString().isEmpty()){
-                    Toast.makeText(parentHolder.getContext(), "fields are empty !", Toast.LENGTH_SHORT).show();
-                }else {
-                    String qwerty = userName.getText().toString();
-                    DocumentReference docRef = db.collection("users").document(qwerty);
-                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                if (document.exists()) {
-                                    Toast.makeText(parentHolder.getContext(), "UserName already exists, choose another", Toast.LENGTH_SHORT).show();
 
-                                    Log.d(TAG, "DocumentSnapshot data: " );
-                                } else {
-                                    createAccount(emailText.getText().toString() , passwordText.getText().toString(),userName.getText().toString());
-                                    Log.d(TAG, "No such document");
-                                }
-                            } else {
-                                Log.d(TAG, "get failed with ", task.getException());
-                            }
+        signUp.setOnClickListener(v -> {
+            if (
+                    emailText.getText().toString().trim().isEmpty()
+                    || passwordText.getText().toString().trim().isEmpty()
+                    || userName.getText().toString().isEmpty()) {
+
+                Toast.makeText(parentHolder.getContext(), "fields are empty !", Toast.LENGTH_SHORT).show();
+            }else {
+                String qwerty = userName.getText().toString().trim();
+                DocumentReference docRef = db.collection("users").document(qwerty);
+                docRef.get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Toast.makeText(parentHolder.getContext(), "UserName already exists, choose another", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "DocumentSnapshot data: " );
+                        } else {
+                            createAccount(emailText.getText().toString() , passwordText.getText().toString(),userName.getText().toString());
+                            Log.d(TAG, "No such document");
                         }
-                    });
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                });
 
-                }
             }
         });
-
-
-
-
 
         return parentHolder;
     }
@@ -147,64 +141,49 @@ public class fragment_signup extends Fragment {
     private void createAccount(String email , String password,String userName){
 
         mAuth.createUserWithEmailAndPassword(email, password )
-                .addOnCompleteListener((Activity) parentHolder.getContext(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                             user = mAuth.getCurrentUser();
-                            Toast.makeText(parentHolder.getContext(), "Authentication success.",
-                                   Toast.LENGTH_LONG).show();
-                            String userId = mAuth.getCurrentUser().getUid();
-                            String userMail = mAuth.getCurrentUser().getEmail();
+                .addOnCompleteListener((Activity) parentHolder.getContext(), task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "createUserWithEmail:success");
+                        user = mAuth.getCurrentUser();
+                        Toast.makeText(parentHolder.getContext(), "Authentication success.",
+                               Toast.LENGTH_LONG).show();
+                        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                        String userMail = mAuth.getCurrentUser().getEmail();
 
-                            Map<String, Object> userData = new HashMap<>();
-                            userData.put("mail",userMail);
-                            userData.put("UId", userId);
-                            db.collection("users")
-                                    .document(userName)
-                                    .set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
+                        Map<String, Object> userData = new HashMap<>();
+                        userData.put("mail",userMail);
+                        userData.put("UId", userId);
+                        db.collection("users")
+                                .document(userName)
+                                .set(userData);
+                        if(user.isEmailVerified()){
+                            startActivity(new Intent(parentHolder.getContext(),MainActivity.class));
+                            requireActivity().finish();
 
-                                        }
-                                    });
-                            if(user.isEmailVerified()){
-                                startActivity(new Intent(parentHolder.getContext(),MainActivity.class));
-                                requireActivity().finish();
+                        }else {
+                            user.sendEmailVerification();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(parentHolder.getContext());
+                            builder.setTitle("Verify Your Email");
+                            builder.setMessage("An mail has been sent to you email address to verify you identity");
+                            builder.setCancelable(false);
+                            builder.setPositiveButton("ok",(DialogInterface.OnClickListener )(dialog, which) -> {
+                                dialog.cancel();
 
-                            }else {
-                                user.sendEmailVerification();
-                                AlertDialog.Builder builder = new AlertDialog.Builder(parentHolder.getContext());
-                                builder.setTitle("Verify Your Email");
-                                builder.setMessage("An mail has been sent to you email address to verify you identity");
-                                builder.setCancelable(false);
-                                builder.setPositiveButton("ok",(DialogInterface.OnClickListener )(dialog, which) -> {
-                                    dialog.cancel();
+                            });
 
-                                });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
 
-                                AlertDialog alertDialog = builder.create();
-                                alertDialog.show();
-
-
-                            }
-
-
-                           // updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            //Toast.makeText(parentHolder.getContext(), "Authentication failed. ",
-                              //      Toast.LENGTH_SHORT).show();
-
-                            //updateUI(null);
                         }
+                       // updateUI(user);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(parentHolder.getContext(), "Authentication failed. ", Toast.LENGTH_SHORT).show();
 
+                        //updateUI(null);
                     }
-
-
 
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

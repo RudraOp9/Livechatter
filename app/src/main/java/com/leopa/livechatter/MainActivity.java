@@ -2,9 +2,11 @@ package com.leopa.livechatter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -18,32 +20,50 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.leopa.livechatter.model.DataModel;
+import com.permissionx.guolindev.PermissionX;
 
 public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mAuth.addAuthStateListener(firebaseAuth -> {
 
+            if (firebaseAuth.getCurrentUser() != null){
+                String uid = firebaseAuth.getCurrentUser().getUid();
+                Toast.makeText(MainActivity.this, uid, Toast.LENGTH_SHORT).show();
+                DataModel.DataModeluid = uid;
 
+            }else {
+                startActivity(new Intent(MainActivity.this,login_page.class));
+                finish();
+            }
+        });
+
+        PermissionX.init(this)
+                .permissions(Manifest.permission.INTERNET, android.Manifest.permission.RECORD_AUDIO, Manifest.permission.CHANGE_NETWORK_STATE)
+                .request((allGranted, grantedList, deniedList) -> {
+                    if (allGranted){
+                        Toast.makeText(this, "All permission granted", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
         TextView AboutUs,logOut;
-
-
-        if (checkLoggedIn()){
-
-        }else {
-            startActivity( new Intent(this, login_page_profile.class));
-            finish();
-        }
 
         TextView editProfile = findViewById(R.id.buttonProfile);
 
@@ -68,20 +88,12 @@ public class MainActivity extends AppCompatActivity {
 
         AboutUs = findViewById(R.id.AboutUs);
         logOut = findViewById(R.id.logOut);
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this,login_page.class));
-                finish();
-            }
+        logOut.setOnClickListener(v -> {
+            mAuth.signOut();
+            startActivity(new Intent(MainActivity.this,login_page.class));
+            finish();
         });
-        AboutUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, aboutUs.class));
-            }
-        });
+        AboutUs.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, aboutUs.class)));
 
 
 
@@ -123,27 +135,12 @@ public class MainActivity extends AppCompatActivity {
         openDrawer(drawerLayout);
     }
 
-    private boolean checkLoggedIn() {
-
-        SharedPreferences sp1 = getSharedPreferences("UserData",MODE_PRIVATE);
-        int value = sp1.getInt("isLoggedIn",9);
-        if(value==0){
-            return true;// 0 is logged in 1 is not loggedddd
-        }
-        return false;
-    }
-
-
-
-
     @Override
     protected void onResume() {
         // put your code here...
         super.onResume();
         TextView textView =  findViewById(R.id.name1);
         ImageView imageView = findViewById(R.id.profileImg);
-
-
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserData",MODE_PRIVATE);
         String k = sharedPreferences.getString("userName"," ");
@@ -166,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         closeDrawer(drawerLayout);
     }
 
-/*    @Override
+   /* @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.

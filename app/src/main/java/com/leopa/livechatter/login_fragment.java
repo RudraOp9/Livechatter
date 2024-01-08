@@ -35,8 +35,7 @@ import java.util.Objects;
  */
 public class login_fragment extends Fragment {
     View parentHolder;
-    private FirebaseAuth mAuth;
-    FirebaseUser user;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -82,25 +81,25 @@ public class login_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
         parentHolder = inflater.inflate(R.layout.fragment_login, container, false);
+
+        mAuth.addAuthStateListener(firebaseAuth -> {
+            if (firebaseAuth.getCurrentUser() != null){
+                startActivity(new Intent(parentHolder.getContext(),MainActivity.class));
+            }
+        });
 
 
         EditText emailText =(EditText) parentHolder.findViewById(R.id.emailText);
         EditText passwordText =(EditText) parentHolder.findViewById(R.id.passText);
         Button login = (Button) parentHolder.findViewById(R.id.logIn);
 
-        mAuth = FirebaseAuth.getInstance();
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (emailText.getText().toString().trim().isEmpty() || passwordText.getText().toString().trim().isEmpty()){
-                    Toast.makeText(parentHolder.getContext(), "fields are empty !", Toast.LENGTH_SHORT).show();
-                }else {
-                    loginAccount(emailText.getText().toString().trim() , passwordText.getText().toString().trim());
-                }
+        login.setOnClickListener(v -> {
+            if (emailText.getText().toString().trim().isEmpty() || passwordText.getText().toString().trim().isEmpty()){
+                Toast.makeText(parentHolder.getContext(), "fields are empty !", Toast.LENGTH_SHORT).show();
+            }else {
+                loginAccount(emailText.getText().toString().trim() , passwordText.getText().toString().trim());
             }
         });
         return parentHolder;
@@ -109,72 +108,51 @@ public class login_fragment extends Fragment {
     private void loginAccount(String email , String password){
 
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener((Activity) parentHolder.getContext(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                .addOnCompleteListener((Activity) parentHolder.getContext(), task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithEmail:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        assert user != null;
+                        if(user.isEmailVerified()){
+                            Toast.makeText(parentHolder.getContext(), "Authentication success.",
+                                    Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(parentHolder.getContext(),MainActivity.class));
+                            requireActivity().finish();
 
+                        }else {
+                            user.sendEmailVerification();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(parentHolder.getContext());
+                            builder.setTitle("Email not Verified");
+                            builder.setMessage("An mail has been sent to you email address to verify you identity");
+                            builder.setCancelable(false);
+                            builder.setPositiveButton("ok",(DialogInterface.OnClickListener )(dialog, which) -> dialog.cancel());
 
-                            assert user != null;
-                            if(user.isEmailVerified()){
-                                Toast.makeText(parentHolder.getContext(), "Authentication success.",
-                                        Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(parentHolder.getContext(),MainActivity.class));
-                                requireActivity().finish();
-
-                            }else {
-                                user.sendEmailVerification();
-                                AlertDialog.Builder builder = new AlertDialog.Builder(parentHolder.getContext());
-                                builder.setTitle("Email not Verified");
-                                builder.setMessage("An mail has been sent to you email address to verify you identity");
-                                builder.setCancelable(false);
-                                builder.setPositiveButton("ok",(DialogInterface.OnClickListener )(dialog, which) -> {
-                                    dialog.cancel();
-
-                                });
-
-
-                                AlertDialog alertDialog = builder.create();
-                                alertDialog.show();
-                            }
-
-                            //updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            //Toast.makeText(parentHolder.getContext(), "Authentication failed.",
-                                //    Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
                         }
+
+                        //updateUI(user);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        Toast.makeText(parentHolder.getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        //updateUI(null);
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        String error = e.getMessage();
-                        Toast.makeText(parentHolder.getContext(), error, Toast.LENGTH_SHORT).show();
-                    }
+                }).addOnFailureListener(e -> {
+                    String error = e.getMessage();
+                    Toast.makeText(parentHolder.getContext(), error, Toast.LENGTH_SHORT).show();
                 });
 
 
     }
+
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null ){
-            currentUser.reload();
-            if ( currentUser.isEmailVerified()) {
-                startActivity(new Intent(parentHolder.getContext(), MainActivity.class));
-                requireActivity().finish();
-            }else {
-                Toast.makeText(parentHolder.getContext(), "verify your email", Toast.LENGTH_SHORT).show();
-            }
-        }else{
-           mAuth.signOut();
-        }
+
     }
+
+
 }

@@ -66,8 +66,12 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     //firestore
     implementation("com.google.firebase:firebase-firestore")
-
+    implementation("com.google.firebase:firebase-database")
     //fire auth
     implementation("com.google.firebase:firebase-auth")
+
+    implementation ("com.google.code.gson:gson:2.10.1")
+    implementation ("org.webrtc:google-webrtc:1.0.32006")
+    implementation ("com.guolindev.permissionx:permissionx:1.6.1")
 
 }
